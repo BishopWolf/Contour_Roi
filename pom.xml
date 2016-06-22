@@ -13,10 +13,10 @@
     </parent>
 
     <groupId>sc.fiji</groupId>
-    <artifactId>ContourRoi</artifactId>
+    <artifactId>Contour_Roi_Tool</artifactId>
     <version>0.1.0-SNAPSHOT</version>
 
-    <name>plugins/Tools/ContourRoi.jar</name>
+    <name>plugins/Tools/Contour_Roi_Tool.jar</name>
     <description>A Maven project implementing a ContourRoi Tool</description>
 
     <developers>
