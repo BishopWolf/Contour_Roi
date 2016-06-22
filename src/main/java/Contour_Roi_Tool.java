@@ -10,8 +10,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * An ImageJ magic wand with selectable tolerance, variable hue or grayscale
- * preference for RGB, gradient detection for grayscale, 4-connected,
+ * An ImageJ interactive magic wand with selectable tolerance, variable hue or 
+ * grayscale, preference for RGB, gradient detection for grayscale, 4-connected,
  * 8-connected or disconnected operation and preview.
  *
  *
@@ -89,7 +89,7 @@ import java.awt.event.*;
  */
 public class Contour_Roi_Tool extends PlugInTool implements DialogListener {
 
-    private final static String CLASS_NAME = "Versatile_Wand_Tool";
+    private final static String CLASS_NAME = "Contour_Roi_Tool";
     private final static String[] CONNECTED_STRINGS = new String[]{"8-connected", "4-connected", "non-contiguous"};
     private final static int EIGHT_CONNECTED = 0, FOUR_CONNECTED = 1, NON_CONTIGUOUS = 2;
     private final static int UNKNOWN = 0, OUTSIDE = 1, INSIDE = -1;  //mask pixel values
@@ -142,7 +142,7 @@ public class Contour_Roi_Tool extends PlugInTool implements DialogListener {
         boolean saveIncludeHoles = includeHoles;
         boolean saveUseEyedropper = useEyedropper;
 
-        GenericDialog gd = new GenericDialog("Versatile Wand Options");
+        GenericDialog gd = new GenericDialog("Contour Roi Options");
         if (imp == null || impType == ImagePlus.COLOR_RGB
                 || (impType == ImagePlus.GRAY8 && imp.getProcessor().getCalibrationTable() == null)) {
             gd.addSlider("Value Tolerance", 0, 255, valueTolerance);
@@ -181,7 +181,6 @@ public class Contour_Roi_Tool extends PlugInTool implements DialogListener {
         useEyedropper = gd.getNextBoolean();
         connection = gd.getNextChoiceIndex();
         includeHoles = gd.getNextBoolean();
-        ImagePlus imp = WindowManager.getCurrentImage();
         if (gd.invalidNumber() || valueTolerance < 0 || colorSensitivity < -1 || colorSensitivity > 1 || gradientTolerance < 0) {
             return false;
         }
@@ -246,7 +245,7 @@ public class Contour_Roi_Tool extends PlugInTool implements DialogListener {
         yshift = 0;
         valueTolerance0 = 255 * (imp.getProcessor().getPixelValue(xStart, yStart) / imp.getStatistics().max);
         valueTolerance = valueTolerance0;
-        update(imp, e);
+        update(imp);
     }
 
     public void mouseDragged(ImagePlus imp, MouseEvent e) {
@@ -254,10 +253,10 @@ public class Contour_Roi_Tool extends PlugInTool implements DialogListener {
         yshift = yStart - ic.offScreenY(e.getY());
         valueTolerance = valueTolerance0 + yshift;
         valueTolerance = Math.min(254, Math.max(1, valueTolerance));
-        update(imp, e);
+        update(imp);
     }
 
-    private void update(final ImagePlus imp, MouseEvent e) {
+    private void update(final ImagePlus imp) {
         if (imp.isLocked()) {
             return; //image has been locked previously
         } else {
@@ -283,10 +282,10 @@ public class Contour_Roi_Tool extends PlugInTool implements DialogListener {
                 options += " include";
             }
             if (Recorder.scriptMode()) {
-                Recorder.recordCall("vwt = IJ.runPlugIn(\"Versatile_Wand_Tool\", \"\");");
+                Recorder.recordCall("vwt = IJ.runPlugIn(\"Contour_Roi_Tool\", \"\");");
                 Recorder.recordCall("vwt.doWand(imp, " + xStart + ", " + yStart + ", " + valueTolerance + ", \"" + options + "\");");
             } else {
-                String s = "call(\"Versatile_Wand_Tool.doWand\", " + xStart + ", " + yStart + ", " + (int) valueTolerance + ", \"" + options + "\");\n";
+                String s = "call(\"Contour_Roi_Tool.doWand\", " + xStart + ", " + yStart + ", " + (int) valueTolerance + ", \"" + options + "\");\n";
                 Recorder.recordString(s);
             }
         }
