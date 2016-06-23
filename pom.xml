@@ -36,14 +36,14 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/BishopWolf/ContourRoi</connection>
-        <developerConnection>scm:git:git@github.com:BishopWolf/ContourRoi</developerConnection>
+        <connection>scm:git:git://github.com/BishopWolf/Contour_Roi</connection>
+        <developerConnection>scm:git:git@github.com:BishopWolf/Contour_Roi</developerConnection>
         <tag>HEAD</tag>
-        <url>https://github.com/BishopWolf/ContourRoi</url>
+        <url>https://github.com/BishopWolf/Contour_Roi</url>
     </scm>
 
     <properties>
-        <main-class>ContourRoi</main-class>
+        <main-class>Contour_Roi_Tool</main-class>
     </properties>
 
     <build>
@@ -56,15 +56,6 @@
                             <mainClass>${main-class}</mainClass>
                         </manifest>
                     </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
