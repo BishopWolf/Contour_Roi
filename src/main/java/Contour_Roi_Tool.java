@@ -331,8 +331,8 @@ public class Contour_Roi_Tool extends PlugInTool implements DialogListener {
         }
         if (ip.getMinThreshold() == ImageProcessor.NO_THRESHOLD) {
             lowLimit = grayRef - (float) valueTolerance;
-            highLimit = grayRef + (float) valueTolerance;
-            //highLimit = (float) ip.getStatistics().max;
+            //highLimit = grayRef + (float) valueTolerance;
+            highLimit = (float) ip.getStatistics().max;
         } else if (cal == null) {
             lowLimit = (float) ip.getMinThreshold();
             highLimit = (float) ip.getMaxThreshold();
